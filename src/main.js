@@ -1,20 +1,37 @@
 import Lenis from 'lenis';
+import { splitHeroTitle, splitWords, runSplash } from './text-fx.js';
+import { initInteractions } from './interactions.js';
+import { initStickers } from './stickers.js';
+import { initReviews } from './reviews.js';
 
+// The inline <head> script adds .js and removes it again if this module has not set .fx-ready
+// within a few seconds, so a failed script never leaves content hidden. It is not re-added here, so content a
+// visitor is already reading never re-hides; the pinned film is skipped in that fallback mode as well.
 const root = document.documentElement;
-root.classList.add('js'); // also set inline in <head> to avoid a reveal flash
+const effectsActive = () => root.classList.contains('js');
 
 const prefersReducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-/** Shared scroll state read by the render loop and the 3D scene. */
-const state = { scrollY: window.scrollY, vh: window.innerHeight, pointerX: 0, pointerY: 0 };
+/* Text splitting comes first: every DOM write happens before the first layout read, so this task never forces a reflow. */
+splitHeroTitle(document.querySelector('.hero__title'));
+const headings = [...document.querySelectorAll('.h2')];
+headings.forEach(splitWords);
 
-/* Smooth scrolling */
-const lenis = prefersReducedMotion ? null : new Lenis({ lerp: 0.11, smoothWheel: true });
-if (lenis) {
+/** Shared scroll state read by the render loop and the 3D scene. Scroll and height are filled in by measure(). */
+const state = { scrollY: 0, vh: 0, pointerX: 0, pointerY: 0 };
+
+/* Smooth scrolling. Lenis reads layout when constructed, so it is created after the first frame (see startLenis). */
+let lenis = null;
+let splashDone = false;
+function startLenis() {
+  if (prefersReducedMotion) {
+    addEventListener('scroll', () => { state.scrollY = window.scrollY; }, { passive: true });
+    return;
+  }
+  lenis = new Lenis({ lerp: 0.11, smoothWheel: true });
   lenis.on('scroll', ({ scroll }) => { state.scrollY = scroll; });
-} else {
-  addEventListener('scroll', () => { state.scrollY = window.scrollY; }, { passive: true });
+  if (!splashDone) lenis.stop();
 }
 
 document.querySelectorAll('a[href^="#"]').forEach((link) => {
@@ -40,6 +57,38 @@ const revealObserver = new IntersectionObserver((entries) => {
 }, { rootMargin: '0px 0px -10% 0px', threshold: 0.08 });
 document.querySelectorAll('[data-reveal]').forEach((el) => revealObserver.observe(el));
 
+/* Text animations: letters in the hero, word masks on headings, tracking on eyebrows */
+headings.forEach((heading) => revealObserver.observe(heading));
+document.querySelectorAll('.eyebrow').forEach((label) => {
+  if (!label.closest('.hero')) revealObserver.observe(label);
+});
+
+const HERO_MEDIA_DELAY_MS = 700;
+/* Hero media waits for the splash, so it never competes with first paint. Reduced motion gets a still photo. */
+const smallHero = matchMedia('(max-width: 919px)');
+function heroMediaSrc(img) {
+  if (prefersReducedMotion) return img.dataset.still;
+  return (smallHero.matches && img.dataset.srcSmall) || img.dataset.src;
+}
+function loadHeroMedia() {
+  document.querySelectorAll('.hero img[data-src]').forEach((img) => {
+    img.addEventListener('load', () => img.classList.add('is-ready'), { once: true });
+    img.src = heroMediaSrc(img);
+    img.removeAttribute('data-src');
+  });
+}
+
+/* Splash: hold smooth scrolling until it fades away */
+runSplash(document.getElementById('splash'), {
+  reducedMotion: prefersReducedMotion,
+  onDone: () => {
+    splashDone = true;
+    lenis?.start();
+    // After the entrance has started, in its own task, so decoding never lands on the intro frame.
+    setTimeout(loadHeroMedia, HERO_MEDIA_DELAY_MS);
+  },
+});
+
 /* Nav hides on scroll down, returns on scroll up */
 const nav = document.querySelector('[data-nav]');
 const sceneCanvas = document.getElementById('scene');
@@ -60,6 +109,7 @@ const filmTrack = document.querySelector('[data-film]');
 const filmBar = document.querySelector('[data-film-bar]');
 const film$ = { top: 0, travel: 0 };
 function measureFilm() {
+  if (!effectsActive()) { film$.travel = 0; film.style.height = ''; return; }
   film$.travel = Math.max(0, filmTrack.scrollWidth - root.clientWidth);
   film.style.height = `${film$.travel + state.vh}px`;
   film$.top = film.getBoundingClientRect().top + state.scrollY;
@@ -73,38 +123,6 @@ function updateFilm(y) {
   const progress = Math.min(1, Math.max(0, (y - film$.top) / film$.travel));
   filmTrack.style.transform = `translate3d(${-progress * film$.travel}px,0,0)`;
   filmBar.style.transform = `scaleX(${progress})`;
-}
-
-/* Gentle parallax for gallery photos */
-const parallaxItems = [...document.querySelectorAll('[data-parallax]')].map((el) => ({
-  el, pic: el.querySelector('picture'), factor: Number(el.dataset.parallax), top: 0, height: 0,
-}));
-function measureParallax() {
-  for (const item of parallaxItems) {
-    const rect = item.el.getBoundingClientRect();
-    item.top = rect.top + state.scrollY;
-    item.height = rect.height;
-  }
-}
-function updateParallax(y) {
-  for (const item of parallaxItems) {
-    const center = item.top + item.height / 2 - (y + state.vh / 2);
-    if (!item.pic || Math.abs(center) > state.vh * 1.5) continue;
-    item.pic.style.transform = `translate3d(0,${center * item.factor * -0.5}px,0)`;
-  }
-}
-
-/* Pointer driven 3D tilt on glass cards */
-if (finePointer && !prefersReducedMotion) {
-  document.querySelectorAll('[data-tilt]').forEach((card) => {
-    card.addEventListener('pointermove', (event) => {
-      const rect = card.getBoundingClientRect();
-      const x = (event.clientX - rect.left) / rect.width - 0.5;
-      const y = (event.clientY - rect.top) / rect.height - 0.5;
-      card.style.transform = `perspective(900px) rotateX(${(-y * 7).toFixed(2)}deg) rotateY(${(x * 9).toFixed(2)}deg) translateZ(0)`;
-    });
-    card.addEventListener('pointerleave', () => { card.style.transform = ''; });
-  });
 }
 
 /* Accessible menu tabs */
@@ -141,18 +159,77 @@ tabs.forEach((tab, i) => {
   });
 });
 
-if (finePointer) {
-  addEventListener('pointermove', (event) => {
-    state.pointerX = event.clientX / window.innerWidth - 0.5;
-    state.pointerY = event.clientY / window.innerHeight - 0.5;
-  }, { passive: true });
+/* Single render loop for DOM driven motion. Registered before the pointer layer and the scene,
+   so Lenis sets the scroll position while layout is still clean, before their style writes. */
+function frame(time) {
+  requestAnimationFrame(frame);
+  lenis?.raf(time);
+  const y = state.scrollY;
+  if (!measured || y === lastFrameY) return;
+  lastFrameY = y;
+  updateNav(y);
+  updateDock(y);
+  updateFilm(y);
 }
+requestAnimationFrame(frame);
+
+/* Pointer layer (cursor, spotlight, magnets, tilt) also feeds the 3D scene's parallax. */
+if (finePointer) {
+  initInteractions({
+    reducedMotion: prefersReducedMotion,
+    onPointer: (x, y) => {
+      state.pointerX = x / window.innerWidth - 0.5;
+      state.pointerY = y / window.innerHeight - 0.5;
+    },
+  });
+}
+
+/* Mobile dock: highlights the section in view and slides its pill between items */
+const dock = document.querySelector('[data-dock-nav]');
+const dockPill = dock.querySelector('.dock__pill');
+const dockLinks = [...dock.querySelectorAll('[data-dock]')];
+const dockTargets = dockLinks.map((link) => ({ link, section: document.getElementById(link.dataset.dock), top: 0 }));
+let activeDock = null;
+function measureDock() {
+  for (const t of dockTargets) t.top = t.section.getBoundingClientRect().top + state.scrollY;
+  if (activeDock) placeDockPill(activeDock, false);
+}
+function placeDockPill(link, animate) {
+  if (!dock.getClientRects().length) return; // dock is display:none above 980px
+  dockPill.style.setProperty('--pill-x', `${link.offsetLeft}px`);
+  dockPill.style.setProperty('--pill-w', `${link.offsetWidth}px`);
+  if (!animate || prefersReducedMotion) return;
+  dockPill.classList.remove('is-moving');
+  void dockPill.offsetWidth;
+  dockPill.classList.add('is-moving');
+}
+function setActiveDock(link) {
+  if (link === activeDock) return;
+  activeDock?.removeAttribute('aria-current');
+  link.setAttribute('aria-current', 'true');
+  placeDockPill(link, activeDock !== null);
+  activeDock = link;
+}
+const DOCK_TAP_LOCK_MS = 1800;
+let dockLockedUntil = 0;
+function updateDock(y) {
+  if (performance.now() < dockLockedUntil) return;
+  const line = y + state.vh * 0.45;
+  let current = dockTargets[0];
+  for (const t of dockTargets) if (t.top <= line) current = t;
+  setActiveDock(current.link);
+}
+dockLinks.forEach((link) => link.addEventListener('click', () => {
+  setActiveDock(link);
+  dockLockedUntil = performance.now() + DOCK_TAP_LOCK_MS;
+}));
 
 /* Layout measurement */
 function measure() {
   state.vh = window.innerHeight;
+  state.scrollY = lenis ? lenis.scroll : window.scrollY;
   measureFilm();
-  measureParallax();
+  measureDock();
 }
 let measureTimer = 0;
 let lastFrameY = -1;
@@ -165,20 +242,14 @@ addEventListener('resize', scheduleMeasure);
 new ResizeObserver(scheduleMeasure).observe(document.getElementById('main'));
 document.fonts?.ready.then(scheduleMeasure);
 document.querySelectorAll('.film img').forEach((img) => img.addEventListener('load', scheduleMeasure, { once: true }));
-measure();
-
-/* Single render loop for DOM driven motion */
-function frame(time) {
-  requestAnimationFrame(frame);
-  lenis?.raf(time);
-  const y = state.scrollY;
-  if (y === lastFrameY) return;
-  lastFrameY = y;
-  updateNav(y);
-  updateFilm(y);
-  if (!prefersReducedMotion) updateParallax(y);
-}
-requestAnimationFrame(frame);
+// First measure after the browser's own first layout, so no layout is forced inside this script task.
+let measured = false;
+requestAnimationFrame(() => requestAnimationFrame(() => {
+  startLenis();
+  measure();
+  measured = true;
+  lastFrameY = -1;
+}));
 
 /* The WebGL scene loads after the page is interactive so it never competes with first paint. */
 function loadScene() {
@@ -192,7 +263,8 @@ function loadScene() {
 }
 /* Defer the scene until the visitor engages, or until the page has been calm for a while. */
 const SCENE_FALLBACK_DELAY_MS = 4000;
-const engageEvents = ['pointermove', 'pointerdown', 'wheel', 'touchstart', 'keydown', 'scroll'];
+// Only genuine input counts: programmatic scroll events (Lenis, scroll restoration) must not start the heavy scene.
+const engageEvents = ['pointermove', 'pointerdown', 'wheel', 'touchstart', 'keydown'];
 let sceneRequested = false;
 function requestScene() {
   if (sceneRequested) return;
@@ -208,3 +280,17 @@ function armScene() {
 }
 if (document.readyState === 'complete') armScene();
 else addEventListener('load', armScene, { once: true });
+
+/* Draggable GIF stickers in the menu, delivery and visit sections */
+// Below the fold extras wait for an idle moment so they never add to startup blocking time.
+const runWhenIdle = (task) => ('requestIdleCallback' in window ? requestIdleCallback(task, { timeout: 2000 }) : setTimeout(task, 600));
+runWhenIdle(() => initStickers());
+runWhenIdle(() => initReviews({ reducedMotion: prefersReducedMotion }));
+
+/* Logo sheen only runs while its wordmark is on screen */
+const sheenObserver = new IntersectionObserver((entries) => {
+  for (const entry of entries) entry.target.classList.toggle('is-paused', !entry.isIntersecting);
+});
+document.querySelectorAll('.sheen').forEach((el) => sheenObserver.observe(el));
+
+root.classList.add('fx-ready'); // everything is wired: the head failsafe stands down

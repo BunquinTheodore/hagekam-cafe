@@ -34,9 +34,33 @@ function renderPicture(attrs) {
   );
 }
 
+/** Width / height of a manifest image, so layout CSS can follow the real photo ratios. */
+function aspect(name) {
+  const entry = manifest[name];
+  if (!entry) throw new Error(`aspect: unknown image "${name}"`);
+  return 1 / entry.ratio;
+}
+
+/** Names of the photos inside the film track, read from its <x-pic> tags. */
+function filmNames(html) {
+  const start = html.indexOf('data-film');
+  if (start < 0) return [];
+  const track = html.slice(start, html.indexOf('</ol>', start));
+  return [...track.matchAll(/<x-pic\s[^>]*name="([a-z0-9-]+)"/g)].map((m) => m[1]);
+}
+
+function fillRatioTokens(html) {
+  const film = filmNames(html);
+  return html
+    .replace('{{film-ratio}}', film.reduce((sum, name) => sum + aspect(name), 0).toFixed(3))
+    .replace('{{film-frames}}', String(film.length))
+    .replace(/\{\{aspect:([a-z0-9-]+)\}\}/g, (_, name) => aspect(name).toFixed(4))
+    .replace(/\{\{aspect-sum:([a-z0-9,-]+)\}\}/g, (_, list) => list.split(',').reduce((sum, name) => sum + aspect(name), 0).toFixed(3));
+}
+
 const pictures = () => ({
   name: 'hagekam-pictures',
-  transformIndexHtml: (html) => html.replace(/<x-pic\s([^>]*?)\s*\/?>/g, (_, raw) => renderPicture(readAttrs(raw))),
+  transformIndexHtml: (html) => fillRatioTokens(html).replace(/<x-pic\s([^>]*?)\s*\/?>/g, (_, raw) => renderPicture(readAttrs(raw))),
 });
 
 export default defineConfig({

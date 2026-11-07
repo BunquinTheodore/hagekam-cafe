@@ -1,13 +1,13 @@
 // Builds responsive AVIF/WebP from the curated source photos.
 // Usage: node scripts/images.mjs <sourceDir>
 import sharp from 'sharp';
-import { readdirSync, mkdirSync, writeFileSync } from 'node:fs';
+import { readdirSync, mkdirSync, writeFileSync, existsSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 
 const SRC = process.argv[2];
 if (!SRC) throw new Error('Pass the source photo directory as the first argument');
 const OUT = 'public/img';
-const WIDTHS = [480, 960, 1440];
+const WIDTHS = [480, 720, 960, 1440];
 
 const files = readdirSync(SRC).filter((f) => f.endsWith('.jpg') && !f.includes('(1)')).sort();
 const PICK = {
@@ -23,6 +23,12 @@ const PICK = {
   10: 'barista', 39: 'delivery',
 };
 
+/** True when the output exists and is newer than its source (pass --force to rebuild everything). */
+const FORCE = process.argv.includes('--force');
+function isFresh(output, source) {
+  return !FORCE && existsSync(output) && statSync(output).mtimeMs >= statSync(source).mtimeMs;
+}
+
 mkdirSync(OUT, { recursive: true });
 const manifest = {};
 for (const [idx, name] of Object.entries(PICK)) {
@@ -35,10 +41,13 @@ for (const [idx, name] of Object.entries(PICK)) {
   manifest[name] = { ratio, widths: [] };
   for (const w of WIDTHS) {
     if (w > meta.width && w !== WIDTHS[0]) continue;
-    const base = sharp(input).rotate().resize({ width: Math.min(w, meta.width) });
-    await base.clone().avif({ quality: 48, effort: 6 }).toFile(join(OUT, `${name}-${w}.avif`));
-    await base.clone().webp({ quality: 68 }).toFile(join(OUT, `${name}-${w}.webp`));
     manifest[name].widths.push(w);
+    const avif = join(OUT, `${name}-${w}.avif`);
+    const webp = join(OUT, `${name}-${w}.webp`);
+    if (isFresh(avif, input) && isFresh(webp, input)) continue; // incremental: skip only up to date variants
+    const base = sharp(input).rotate().resize({ width: Math.min(w, meta.width) });
+    await base.clone().avif({ quality: 48, effort: 6 }).toFile(avif);
+    await base.clone().webp({ quality: 68 }).toFile(webp);
   }
 }
 writeFileSync('src/images.json', JSON.stringify(manifest, null, 1));

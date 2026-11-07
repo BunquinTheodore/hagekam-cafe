@@ -16,9 +16,8 @@
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
-  <link rel="preload" href="/fonts/fraunces-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <script>document.documentElement.classList.add('js')</script>
+  <script>(function(r){r.classList.add('js');setTimeout(function(){if(!r.classList.contains('fx-ready'))r.classList.remove('js')},4000)})(document.documentElement)</script>
   <link rel="stylesheet" href="/src/styles.css">
   <script type="application/ld+json">
   {
@@ -36,13 +35,24 @@
   </script>
 </head>
 <body>
+  <div class="splash" id="splash" aria-hidden="true">
+    <div class="splash__crest">
+      <span class="splash__rays"></span>
+      <svg class="splash__ring" viewBox="0 0 200 200"><circle cx="100" cy="100" r="94"/></svg>
+      <img src="/brand/logo-mark-256.webp" width="256" height="256" alt="">
+    </div>
+    <p class="splash__word"><span style="--i:0">H</span><span style="--i:1">A</span><span style="--i:2">G</span><span style="--i:3">E</span><span style="--i:4">K</span><span style="--i:5">A</span><span style="--i:6">M</span></p>
+    <p class="splash__sub">Café · Puerto Galera</p>
+    <span class="splash__bar"><span></span></span>
+  </div>
   <a class="skip" href="#main">Skip to content</a>
   <div class="grain" aria-hidden="true"></div>
   <canvas id="scene" aria-hidden="true"></canvas>
 
   <header class="nav glass" data-nav>
-    <a class="nav__brand" href="#top" aria-label="Hagekam Café home">
+    <a class="nav__brand sheen" href="#top" aria-label="Hagekam Café home">
       <img src="/brand/wordmark.webp" alt="" width="300" height="130">
+      <span class="sheen__glint" aria-hidden="true"></span>
     </a>
     <nav aria-label="Primary">
       <ul class="nav__links">
@@ -56,29 +66,68 @@
     <a class="btn btn--sun nav__cta" href="#delivery">Order</a>
   </header>
 
+  <nav class="dock glass" aria-label="Sections" data-dock-nav>
+    <span class="dock__pill" aria-hidden="true"></span>
+    <ul class="dock__list">
+      <li><a class="dock__link" href="#top" data-dock="top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5 12 4l9 7.5"/><path d="M5.5 10v9.5h13V10"/><path d="M10 19.5v-5h4v5"/></svg><span>Home</span></a></li>
+      <li><a class="dock__link" href="#story" data-dock="story"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="4"/><path d="M12 3v3M4.9 6.4l2 2M19.1 6.4l-2 2M3 21h18"/></svg><span>Story</span></a></li>
+      <li><a class="dock__link" href="#film" data-dock="film"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 5v14M17 5v14M3 9.5h4M3 14.5h4M17 9.5h4M17 14.5h4"/></svg><span>Film</span></a></li>
+      <li><a class="dock__link" href="#menu" data-dock="menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h12v5a6 6 0 0 1-6 6h0a6 6 0 0 1-6-6Z"/><path d="M17 9.5h1.5a2.5 2.5 0 0 1 0 5H17"/><path d="M8 3.5c0 1 1 1 1 2M12 3.5c0 1 1 1 1 2"/></svg><span>Menu</span></a></li>
+      <li><a class="dock__link" href="#visit" data-dock="visit"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-6.2-6.5-11.2a6.5 6.5 0 0 1 13 0C18.5 14.8 12 21 12 21Z"/><circle cx="12" cy="9.8" r="2.3"/></svg><span>Visit</span></a></li>
+    </ul>
+  </nav>
+
   <main id="main" tabindex="-1">
     <section class="hero" id="top">
-      <div class="hero__sun" aria-hidden="true"></div>
       <div class="hero__inner">
-        <p class="eyebrow">Balatero Port · Puerto Galera</p>
-        <h1 class="hero__title">
-          <span class="line">Life begins</span>
-          <span class="line"><em>after coffee.</em></span>
-        </h1>
-        <p class="hero__lede">A sunrise café by the port. Artisan coffee pulled by our baristas, Coconut Cloud drinks made with real coconut, and island comfort food from morning to night.</p>
-        <div class="hero__cta">
-          <a class="btn btn--sun" href="#menu">See the menu</a>
-          <a class="btn btn--glass" href="#visit">Find us</a>
+        <div class="hero__copy">
+          <p class="eyebrow">Balatero Port · Puerto Galera</p>
+          <h1 class="hero__title">
+            <span class="line">Life begins</span>
+            <span class="line"><em>after coffee.</em></span>
+          </h1>
+          <p class="hero__lede">A sunrise café by the port. Artisan coffee pulled by our baristas, Coconut Cloud drinks made with real coconut, and island comfort food from morning to night.</p>
+          <div class="hero__cta">
+            <a class="btn btn--sun" href="#menu">See the menu</a>
+            <a class="btn btn--glass" href="#visit">Find us</a>
+          </div>
+          <ul class="hero__facts" aria-label="At a glance">
+            <li class="glass" style="--n:0"><span>Open everyday</span><b>9AM to 8PM</b></li>
+            <li class="glass" style="--n:1"><span>Coconut Cloud</span><b>Real coconut</b></li>
+            <li class="glass" style="--n:2"><span>Croffles</span><b>From ₱130</b></li>
+          </ul>
+        </div>
+        <div class="hero__stage">
+          <div class="hero__cup" data-scene-anchor aria-hidden="true"><span class="hero__glow"></span></div>
+          <div class="hero__seal" data-depth="-0.8" aria-hidden="true">
+            <svg class="seal__ring" viewBox="0 0 200 200">
+              <defs><path id="seal-path" d="M100 100m-82 0a82 82 0 1 1 164 0a82 82 0 1 1-164 0"/></defs>
+              <circle class="seal__rule" cx="100" cy="100" r="97"/>
+              <circle class="seal__dots" cx="100" cy="100" r="66"/>
+              <text><textPath href="#seal-path" textLength="514" lengthAdjust="spacing">HAGEKAM CAFE · PUERTO GALERA · LIFE BEGINS AFTER COFFEE ·</textPath></text>
+            </svg>
+            <img class="seal__mark" src="/brand/logo-mark-256.webp" width="256" height="256" alt="">
+          </div>
+          <figure class="hero__brew glass" data-depth="1">
+            <span class="brew__frame"><img class="brew__img" data-src="/gif/now-brewing.webp" data-src-small="/gif/now-brewing-small.webp" data-still="/img/artisan-coffee-480.webp" width="240" height="300" alt="Drinks from the Hagekam Café bar, from artisan coffee to matcha tiramisu"><noscript><img src="/img/artisan-coffee-480.webp" width="240" height="300" alt=""></noscript></span>
+            <figcaption><span class="brew__live"><i aria-hidden="true"></i>Now brewing</span><span class="brew__sub">Fresh at the bar</span></figcaption>
+          </figure>
         </div>
       </div>
-      <aside class="hero__badge glass" aria-label="Opening hours">
-        <img src="/brand/logo-mark-128.webp" alt="Hagekam Café Puerto Galera logo" width="128" height="128">
-        <div>
-          <p class="badge__k">Open everyday</p>
-          <p class="badge__v">9AM to 8PM</p>
-        </div>
-      </aside>
-      <p class="hero__scroll" aria-hidden="true">Scroll</p>
+      <div class="hero__foot" aria-hidden="true">
+        <p class="hero__scroll">Scroll</p>
+        <svg class="hero__band" width="100%" height="26">
+          <defs>
+            <pattern id="tribal" width="48" height="26" patternUnits="userSpaceOnUse">
+              <path d="M0 3h48M0 23h48" stroke="#c98a3a" stroke-opacity=".55" stroke-width="1"/>
+              <path d="M0 19 6 7l6 12 6-12 6 12 6-12 6 12 6-12 6 12" fill="none" stroke="#ffce93" stroke-opacity=".7" stroke-width="1.4" stroke-linejoin="round"/>
+              <path d="M12 10.5l2.5 2.5-2.5 2.5-2.5-2.5zM36 10.5l2.5 2.5-2.5 2.5-2.5-2.5z" fill="#ac8460"/>
+              <circle cx="24" cy="13" r="1.3" fill="#ffce93" fill-opacity=".8"/>
+            </pattern>
+          </defs>
+          <rect width="100%" height="26" fill="url(#tribal)"/>
+        </svg>
+      </div>
     </section>
 
     <div class="marquee" aria-hidden="true">
@@ -97,7 +146,7 @@
       </div>
       <div class="story__crest" data-reveal>
         <div class="crest glass" data-tilt>
-          <img src="/brand/logo-mark.webp" alt="The Hagekam Café crest: sunrise over the sea, palm trees, woven basket, coffee cups and beans" width="640" height="640" loading="lazy" decoding="async">
+          <img src="/brand/logo-mark.webp" srcset="/brand/logo-mark-256.webp 256w, /brand/logo-mark-512.webp 512w, /brand/logo-mark.webp 640w" sizes="(max-width: 600px) 85vw, (max-width: 980px) 520px, 470px" alt="The Hagekam Café crest: sunrise over the sea, palm trees, woven basket, coffee cups and beans" width="640" height="640" loading="lazy" decoding="async">
         </div>
       </div>
       <ul class="facts">
@@ -108,7 +157,8 @@
       </ul>
     </section>
 
-    <section class="film" id="film" aria-labelledby="film-title">
+    <!-- --film-ratio and --frames are filled in at build time from src/images.json (see vite.config.js); they size the pinned strip before JS runs. -->
+    <section class="film" id="film" aria-labelledby="film-title" style="--film-ratio: {{film-ratio}}; --frames: {{film-frames}}">
       <div class="film__pin">
         <header class="film__head">
           <p class="eyebrow">Now showing</p>
@@ -140,42 +190,48 @@
         <h2 class="h2" id="sig-title">Drinks people take the boat for.</h2>
       </header>
       <div class="bento">
-        <article class="card glass card--xl" data-tilt data-reveal>
-          <x-pic name="coconut-cloud" alt="Five Coconut Cloud drinks: mango, taro, coffee and matcha" sizes="(max-width: 720px) 92vw, 50vw">
-          <div class="card__body">
-            <h3>Coconut Cloud Series</h3>
-            <p>Crafted with real coconut. Made for you.</p>
-            <ul class="chips"><li>Mango</li><li>Taro</li><li>Coffee</li><li>Matcha</li></ul>
-          </div>
-        </article>
-        <article class="card glass" data-tilt data-reveal>
-          <x-pic name="tiramisu-trio" alt="Strawberry, matcha and coffee tiramisu drinks" sizes="(max-width: 720px) 92vw, 25vw">
-          <div class="card__body">
-            <h3>Tiramisu lattes</h3>
-            <ul class="chips"><li>Strawberry</li><li>Matcha</li><li>Coffee</li></ul>
-          </div>
-        </article>
-        <article class="card glass" data-tilt data-reveal>
-          <x-pic name="creme-brulee" alt="Coffee and matcha crème brûlée drinks with torched tops" sizes="(max-width: 720px) 92vw, 25vw">
-          <div class="card__body">
-            <h3>Crème brûlée</h3>
-            <ul class="chips"><li>Coffee</li><li>Matcha</li></ul>
-          </div>
-        </article>
-        <article class="card glass" data-tilt data-reveal>
-          <x-pic name="esmeringhoy-latte" alt="Esmeringhoy latte with caramel and sea salt" sizes="(max-width: 720px) 92vw, 25vw">
-          <div class="card__body">
-            <h3>Esmeringhoy latte</h3>
-            <p>Our house latte, sweet and a little salty like the sea breeze.</p>
-          </div>
-        </article>
-        <article class="card glass" data-tilt data-reveal>
-          <x-pic name="mango-biscoff" alt="Mango Biscoff frappe with whipped cream and biscuit crumbs" sizes="(max-width: 720px) 92vw, 25vw">
-          <div class="card__body">
-            <h3>Mango Biscoff</h3>
-            <p>Island mango, Biscoff crumble, cold and creamy.</p>
-          </div>
-        </article>
+        <div class="bento__col bento__col--lead">
+          <article class="card glass card--xl" data-tilt data-reveal>
+            <x-pic name="coconut-cloud" alt="Five Coconut Cloud drinks: mango, taro, coffee and matcha" sizes="(max-width: 720px) 92vw, (max-width: 980px) 46vw, 50vw">
+            <div class="card__body">
+              <h3>Coconut Cloud Series</h3>
+              <p>Crafted with real coconut. Made for you.</p>
+              <ul class="chips"><li>Mango</li><li>Taro</li><li>Coffee</li><li>Matcha</li></ul>
+            </div>
+          </article>
+        </div>
+        <div class="bento__col">
+          <article class="card glass" data-tilt data-reveal>
+            <x-pic name="tiramisu-trio" alt="Strawberry, matcha and coffee tiramisu drinks" sizes="(max-width: 720px) 92vw, (max-width: 980px) 46vw, 25vw">
+            <div class="card__body">
+              <h3>Tiramisu lattes</h3>
+              <ul class="chips"><li>Strawberry</li><li>Matcha</li><li>Coffee</li></ul>
+            </div>
+          </article>
+          <article class="card glass" data-tilt data-reveal>
+            <x-pic name="creme-brulee" alt="Coffee and matcha crème brûlée drinks with torched tops" sizes="(max-width: 720px) 92vw, (max-width: 980px) 46vw, 25vw">
+            <div class="card__body">
+              <h3>Crème brûlée</h3>
+              <ul class="chips"><li>Coffee</li><li>Matcha</li></ul>
+            </div>
+          </article>
+        </div>
+        <div class="bento__col">
+          <article class="card glass" data-tilt data-reveal>
+            <x-pic name="esmeringhoy-latte" alt="Esmeringhoy latte with caramel and sea salt" sizes="(max-width: 720px) 92vw, (max-width: 980px) 46vw, 25vw">
+            <div class="card__body">
+              <h3>Esmeringhoy latte</h3>
+              <p>Our house latte, sweet and a little salty like the sea breeze.</p>
+            </div>
+          </article>
+          <article class="card glass" data-tilt data-reveal>
+            <x-pic name="mango-biscoff" alt="Mango Biscoff frappe with whipped cream and biscuit crumbs" sizes="(max-width: 720px) 92vw, (max-width: 980px) 46vw, 25vw">
+            <div class="card__body">
+              <h3>Mango Biscoff</h3>
+              <p>Island mango, Biscoff crumble, cold and creamy.</p>
+            </div>
+          </article>
+        </div>
       </div>
     </section>
 
@@ -184,6 +240,7 @@
         <p class="eyebrow">The menu</p>
         <h2 class="h2" id="menu-title">From first cup to last plate.</h2>
       </header>
+      <picture><source media="(prefers-reduced-motion: reduce)" srcset="/gif/steaming-cup-still.webp"><img class="sticker sticker--cup" src="/gif/steaming-cup.webp" alt="" aria-hidden="true" width="150" height="150" loading="lazy" decoding="async" draggable="false"></picture>
       <div class="menu__tabs glass" role="tablist" aria-label="Menu categories">
         <button role="tab" id="tab-drinks" aria-controls="panel-drinks" aria-selected="true">Drinks</button>
         <button role="tab" id="tab-pasta" aria-controls="panel-pasta" aria-selected="false" tabindex="-1">House pasta</button>
@@ -194,19 +251,23 @@
       </div>
 
       <div class="menu__panels">
-        <div class="panel glass" role="tabpanel" id="panel-drinks" aria-labelledby="tab-drinks">
+        <div class="panel glass" role="tabpanel" id="panel-drinks" aria-labelledby="tab-drinks" tabindex="0">
           <x-pic class="panel__img" name="matcha-tiramisu" alt="Iced matcha latte beside a slice of matcha tiramisu" sizes="(max-width: 720px) 92vw, 36vw">
-          <div class="panel__list">
+          <div class="panel__list panel__list--cols">
+            <div class="panel__group">
             <h3>Coffee</h3>
             <ul class="items"><li><span>Artisan coffee</span><i>prepared by our barista</i></li><li><span>Esmeringhoy latte</span></li><li><span>Coffee tiramisu</span></li><li><span>Coffee crème brûlée</span></li><li><span>Dark chocolate frappe</span></li></ul>
-            <h3>Matcha</h3>
-            <ul class="items"><li><span>Matcha latte</span></li><li><span>Coconut Cloud matcha</span></li><li><span>Strawberry matcha</span></li><li><span>Sea salt matcha</span></li><li><span>Dirty matcha</span></li><li><span>Coconut Cloud matcha taro</span></li><li><span>Matcha frappe</span></li><li><span>Oreo matcha frappe</span></li></ul>
             <h3>Coconut Cloud</h3>
             <ul class="items"><li><span>Mango · Taro · Coffee · Matcha</span><i>real coconut</i></li></ul>
+            </div>
+            <div class="panel__group">
+            <h3>Matcha</h3>
+            <ul class="items"><li><span>Matcha latte</span></li><li><span>Coconut Cloud matcha</span></li><li><span>Strawberry matcha</span></li><li><span>Sea salt matcha</span></li><li><span>Dirty matcha</span></li><li><span>Coconut Cloud matcha taro</span></li><li><span>Matcha frappe</span></li><li><span>Oreo matcha frappe</span></li></ul>
+            </div>
           </div>
         </div>
 
-        <div class="panel glass" role="tabpanel" id="panel-pasta" aria-labelledby="tab-pasta" hidden>
+        <div class="panel glass" role="tabpanel" id="panel-pasta" aria-labelledby="tab-pasta" tabindex="0" hidden>
           <x-pic class="panel__img" name="bolognese" alt="Bolognese pasta with garlic bread" sizes="(max-width: 720px) 92vw, 36vw">
           <div class="panel__list">
             <h3>House specials</h3>
@@ -215,7 +276,7 @@
           </div>
         </div>
 
-        <div class="panel glass" role="tabpanel" id="panel-rice" aria-labelledby="tab-rice" hidden>
+        <div class="panel glass" role="tabpanel" id="panel-rice" aria-labelledby="tab-rice" tabindex="0" hidden>
           <x-pic class="panel__img" name="garlic-chicken" alt="Creamy garlic chicken with rice" sizes="(max-width: 720px) 92vw, 36vw">
           <div class="panel__list">
             <h3>Premium rice meals</h3>
@@ -226,7 +287,7 @@
           </div>
         </div>
 
-        <div class="panel glass" role="tabpanel" id="panel-croffles" aria-labelledby="tab-croffles" hidden>
+        <div class="panel glass" role="tabpanel" id="panel-croffles" aria-labelledby="tab-croffles" tabindex="0" hidden>
           <x-pic class="panel__img" name="frappe-croffle" alt="Special Biscoff croffle with frappe drinks" sizes="(max-width: 720px) 92vw, 36vw">
           <div class="panel__list">
             <h3>Special croffles</h3>
@@ -234,7 +295,7 @@
           </div>
         </div>
 
-        <div class="panel glass" role="tabpanel" id="panel-bites" aria-labelledby="tab-bites" hidden>
+        <div class="panel glass" role="tabpanel" id="panel-bites" aria-labelledby="tab-bites" tabindex="0" hidden>
           <x-pic class="panel__img" name="longaniza-burger" alt="Mindoro longaniza burger on a black bun" sizes="(max-width: 720px) 92vw, 36vw">
           <div class="panel__list">
             <h3>Burgers &amp; sandwiches</h3>
@@ -244,7 +305,7 @@
           </div>
         </div>
 
-        <div class="panel glass" role="tabpanel" id="panel-greens" aria-labelledby="tab-greens" hidden>
+        <div class="panel glass" role="tabpanel" id="panel-greens" aria-labelledby="tab-greens" tabindex="0" hidden>
           <x-pic class="panel__img" name="caesar-salad" alt="Caesar salad with croutons and bacon" sizes="(max-width: 720px) 92vw, 36vw">
           <div class="panel__list">
             <h3>Salads</h3>
@@ -261,16 +322,21 @@
         <h2 class="h2" id="space-title">Glass walls, warm lights, port views.</h2>
       </header>
       <div class="gallery">
-        <figure class="g g--tall" data-parallax="0.12"><x-pic name="storefront" alt="Hagekam Café storefront with the big COFFEE sign and outdoor seating" sizes="(max-width: 720px) 92vw, 45vw"></figure>
-        <figure class="g" data-parallax="-0.08"><x-pic name="interior-night" alt="Guests at tables inside the café at night" sizes="(max-width: 720px) 92vw, 30vw"></figure>
-        <figure class="g" data-parallax="0.06"><x-pic name="barista" alt="Barista preparing coffee at the espresso machine" sizes="(max-width: 720px) 92vw, 30vw"></figure>
-        <figure class="g g--wide" data-parallax="-0.1"><x-pic name="interior-day" alt="Daytime interior with guests and a view of the street" sizes="(max-width: 720px) 92vw, 45vw"></figure>
-        <figure class="g" data-parallax="0.1"><x-pic name="cups-display" alt="Row of Hagekam iced coffees in front of the crest sign" sizes="(max-width: 720px) 92vw, 30vw"></figure>
-        <figure class="g" data-parallax="-0.06"><x-pic name="spread-outdoor" alt="Pasta, garlic bread and fries on an outdoor table" sizes="(max-width: 720px) 92vw, 30vw"></figure>
+        <div class="gallery__row" data-reveal>
+          <figure class="g g--lead" style="--a: {{aspect:interior-night}}"><x-pic name="interior-night" alt="Guests at tables inside the café at night" sizes="(max-width: 720px) 92vw, 42vw"></figure>
+          <figure class="g" style="--a: {{aspect:barista}}"><x-pic name="barista" alt="Barista preparing coffee at the espresso machine" sizes="(max-width: 720px) 42vw, 24vw"></figure>
+          <figure class="g" style="--a: {{aspect:storefront}}"><x-pic name="storefront" alt="Hagekam Café storefront with the big COFFEE sign and outdoor seating" sizes="(max-width: 720px) 50vw, 32vw"></figure>
+        </div>
+        <div class="gallery__row gallery__row--flip" data-reveal>
+          <figure class="g g--lead" style="--a: {{aspect:interior-day}}"><x-pic name="interior-day" alt="Daytime interior with guests and a view of the street" sizes="(max-width: 720px) 92vw, 46vw"></figure>
+          <figure class="g" style="--a: {{aspect:cups-display}}"><x-pic name="cups-display" alt="Row of Hagekam iced coffees in front of the crest sign" sizes="(max-width: 720px) 46vw, 26vw"></figure>
+          <figure class="g" style="--a: {{aspect:spread-outdoor}}"><x-pic name="spread-outdoor" alt="Pasta, garlic bread and fries on an outdoor table" sizes="(max-width: 720px) 48vw, 28vw"></figure>
+        </div>
       </div>
     </section>
 
     <section class="delivery section" id="delivery" aria-labelledby="delivery-title">
+      <picture><source media="(prefers-reduced-motion: reduce)" srcset="/gif/tara-kape-still.webp"><img class="sticker sticker--tara" src="/gif/tara-kape.webp" alt="" aria-hidden="true" width="220" height="118" loading="lazy" decoding="async" draggable="false"></picture>
       <div class="delivery__card glass" data-reveal>
         <div class="delivery__copy">
           <p class="eyebrow">Tara, kape!</p>
@@ -287,11 +353,14 @@
         <div class="visit__copy" data-reveal>
           <p class="eyebrow">Visit us</p>
           <h2 class="h2" id="visit-title">See you at the port.</h2>
-          <dl class="info">
-            <div class="info__row glass"><dt>Where</dt><dd>Balatero Port, Puerto Galera, Oriental Mindoro</dd></div>
-            <div class="info__row glass"><dt>When</dt><dd>Open everyday, 9AM to 8PM</dd></div>
-            <div class="info__row glass"><dt>Call</dt><dd><a href="tel:+639560738077">0956 073 8077</a></dd></div>
-          </dl>
+          <picture><source media="(prefers-reduced-motion: reduce)" srcset="/gif/neon-open-still.webp"><img class="sticker sticker--neon" src="/gif/neon-open.webp" alt="" aria-hidden="true" width="150" height="75" loading="lazy" decoding="async" draggable="false"></picture>
+          <div class="info-wrap">
+            <dl class="info">
+              <div class="info__row glass"><dt>Where</dt><dd>Balatero Port, Puerto Galera, Oriental Mindoro</dd></div>
+              <div class="info__row glass"><dt>When</dt><dd>Open everyday, 9AM to 8PM</dd></div>
+              <div class="info__row glass"><dt>Call</dt><dd><a href="tel:+639560738077">0956 073 8077</a></dd></div>
+            </dl>
+          </div>
           <div class="hero__cta">
             <a class="btn btn--sun" href="https://www.google.com/maps/search/?api=1&amp;query=Hagekam%20Cafe%20Balatero%20Port%20Puerto%20Galera" target="_blank" rel="noopener">Get directions</a>
             <a class="btn btn--glass" href="https://www.facebook.com/search/top?q=Hagekam%20Cafe" target="_blank" rel="noopener">Hagekam on Facebook</a>
@@ -300,10 +369,20 @@
         <figure class="visit__img" data-reveal><x-pic name="storefront-open" alt="Hagekam Café storefront, open everyday 9AM to 8PM" sizes="(max-width: 720px) 92vw, 42vw"></figure>
       </div>
     </section>
+    <!-- SAMPLE REVIEWS: placeholders until the owner shares real guest reviews. Replace the quotes, names and items below. -->
+    <section class="reviews" id="reviews" aria-labelledby="reviews-title">
+      <header class="section__head reviews__head" data-reveal>
+        <p class="eyebrow">Guest notes</p>
+        <h2 class="h2" id="reviews-title">Loved at the port, cup after cup.</h2>
+      </header>
+      <div class="reviews__row reviews__row--a"><ul class="reviews__track" data-reviews-track><li class="review glass"><span class="review__stars" role="img" aria-label="5 out of 5 stars">★★★★★</span><span class="review__mark" aria-hidden="true">“</span><blockquote class="review__quote"><p>The Coconut Cloud Mango tastes like summer in Puerto Galera. I order it every time I step off the boat.</p></blockquote><p class="review__by"><span class="review__initials" aria-hidden="true">BS</span><span class="review__who"><b>Bea Santos</b><i>Ordered Coconut Cloud Mango</i></span></p></li><li class="review glass"><span class="review__stars" role="img" aria-label="5 out of 5 stars">★★★★★</span><span class="review__mark" aria-hidden="true">“</span><blockquote class="review__quote"><p>Mama Rosa pasta with that toasted garlic bread. Sulit na sulit!</p></blockquote><p class="review__by"><span class="review__initials" aria-hidden="true">PR</span><span class="review__who"><b>Paolo Reyes</b><i>Ordered Mama Rosa</i></span></p></li><li class="review glass"><span class="review__stars" role="img" aria-label="5 out of 5 stars">★★★★★</span><span class="review__mark" aria-hidden="true">“</span><blockquote class="review__quote"><p>Biscoff Special croffle and an Esmeringhoy latte is my perfect merienda.</p></blockquote><p class="review__by"><span class="review__initials" aria-hidden="true">KV</span><span class="review__who"><b>Kat Villanueva</b><i>Ordered Biscoff Special croffle</i></span></p></li><li class="review glass"><span class="review__stars" role="img" aria-label="5 out of 5 stars">★★★★★</span><span class="review__mark" aria-hidden="true">“</span><blockquote class="review__quote"><p>The Blackout Burger is huge and juicy, and the fries stay crispy. Babalik kami!</p></blockquote><p class="review__by"><span class="review__initials" aria-hidden="true">MD</span><span class="review__who"><b>Migo Dela Cruz</b><i>Ordered Blackout Burger</i></span></p></li><li class="review glass"><span class="review__stars" role="img" aria-label="5 out of 5 stars">★★★★★</span><span class="review__mark" aria-hidden="true">“</span><blockquote class="review__quote"><p>Finally, good matcha in Galera. The Sea Salt Matcha is so smooth.</p></blockquote><p class="review__by"><span class="review__initials" aria-hidden="true">AM</span><span class="review__who"><b>Andrea Mendoza</b><i>Ordered Sea Salt Matcha</i></span></p></li><li class="review glass"><span class="review__stars" role="img" aria-label="5 out of 5 stars">★★★★★</span><span class="review__mark" aria-hidden="true">“</span><blockquote class="review__quote"><p>Free cucumber juice with the creamy garlic chicken? Ang bait! Busog and happy.</p></blockquote><p class="review__by"><span class="review__initials" aria-hidden="true">LR</span><span class="review__who"><b>Liza Ramos</b><i>Ordered Creamy Garlic Chicken</i></span></p></li></ul></div>
+      <div class="reviews__row reviews__row--b"><ul class="reviews__track" data-reviews-track><li class="review glass"><span class="review__stars" role="img" aria-label="5 out of 5 stars">★★★★★</span><span class="review__mark" aria-hidden="true">“</span><blockquote class="review__quote"><p>Tara, kape! The barista made my iced coffee exactly how I like it.</p></blockquote><p class="review__by"><span class="review__initials" aria-hidden="true">JB</span><span class="review__who"><b>Joaquin Bautista</b><i>Ordered Artisan coffee</i></span></p></li><li class="review glass"><span class="review__stars" role="img" aria-label="5 out of 5 stars">★★★★★</span><span class="review__mark" aria-hidden="true">“</span><blockquote class="review__quote"><p>The Coffee Tiramisu is dessert and coffee in one cup. Super sarap.</p></blockquote><p class="review__by"><span class="review__initials" aria-hidden="true">NG</span><span class="review__who"><b>Nico Garcia</b><i>Ordered Coffee Tiramisu</i></span></p></li><li class="review glass"><span class="review__stars" role="img" aria-label="5 out of 5 stars">★★★★★</span><span class="review__mark" aria-hidden="true">“</span><blockquote class="review__quote"><p>Cozy spot by the port while waiting for the ferry. Strong coffee, warm staff.</p></blockquote><p class="review__by"><span class="review__initials" aria-hidden="true">EF</span><span class="review__who"><b>Ella Fernandez</b><i>Ordered Artisan coffee</i></span></p></li><li class="review glass"><span class="review__stars" role="img" aria-label="5 out of 5 stars">★★★★★</span><span class="review__mark" aria-hidden="true">“</span><blockquote class="review__quote"><p>The Hagekam Special Nachos are good for two, but I almost finished it alone.</p></blockquote><p class="review__by"><span class="review__initials" aria-hidden="true">RA</span><span class="review__who"><b>Rafael Aquino</b><i>Ordered Special Nachos</i></span></p></li><li class="review glass"><span class="review__stars" role="img" aria-label="5 out of 5 stars">★★★★★</span><span class="review__mark" aria-hidden="true">“</span><blockquote class="review__quote"><p>Matcha Crème Brûlée is a must try. That torched top!</p></blockquote><p class="review__by"><span class="review__initials" aria-hidden="true">TN</span><span class="review__who"><b>Trisha Navarro</b><i>Ordered Matcha Crème Brûlée</i></span></p></li><li class="review glass"><span class="review__stars" role="img" aria-label="5 out of 5 stars">★★★★★</span><span class="review__mark" aria-hidden="true">“</span><blockquote class="review__quote"><p>Tosilog at 9AM with an iced latte. Best way to start a beach day.</p></blockquote><p class="review__by"><span class="review__initials" aria-hidden="true">CM</span><span class="review__who"><b>Carlo Mercado</b><i>Ordered Tosilog</i></span></p></li></ul></div>
+      <p class="reviews__note">Sample reviews shown for preview. Real guest reviews are coming soon.</p>
+    </section>
   </main>
 
   <footer class="footer">
-    <img src="/brand/wordmark.webp" alt="Hagekam Café" width="300" height="130" loading="lazy" decoding="async">
+    <span class="sheen footer__brand"><img src="/brand/wordmark.webp" alt="Hagekam Café" width="300" height="130" loading="lazy" decoding="async"><span class="sheen__glint" aria-hidden="true"></span></span>
     <p>Balatero Port, Puerto Galera · Open everyday 9AM to 8PM</p>
     <p class="footer__small">© 2026 Hagekam Café. Life begins after coffee.</p>
   </footer>

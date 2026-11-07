@@ -17,6 +17,7 @@ npm run dev       # local dev server
 npm run build     # production build to dist/
 npm run preview   # serve the build
 npm run images -- <photo-folder>   # regenerate public/img from source photos
+python scripts/gifs.py             # regenerate the animated WebP stickers in public/gif (needs Pillow; set HAGEKAM_FONTS to a folder with georgiaz.ttf, arialbd.ttf and bahnschrift.ttf when not on Windows)
 ```
 
 `<x-pic name="..." alt="..." sizes="...">` tags in `index.html` are expanded into responsive `<picture>` elements at build time (see `vite.config.js`).
