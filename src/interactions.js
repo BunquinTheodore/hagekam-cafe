@@ -192,7 +192,7 @@ function onPointerDown(event) {
 }
 
 const FIXED_SELECTOR = '.nav, .dock';
-let lastScrollY = window.scrollY;
+let lastScrollY = 0; // read lazily: a layout read at import time would force a full page reflow
 function onScroll() {
   const dy = window.scrollY - lastScrollY;
   lastScrollY = window.scrollY;
@@ -211,6 +211,7 @@ function onScroll() {
 /** Starts the pointer layer. Call only for fine, hover capable pointers. */
 export function initInteractions({ reducedMotion = false, onPointer = null } = {}) {
   s.reducedMotion = reducedMotion;
+  lastScrollY = window.scrollY;
   s.onPointer = onPointer;
   s.cursor = createCursor();
   s.parallax = reducedMotion ? [] : [...document.querySelectorAll('[data-depth]')].map((el) => ({ el, depth: Number(el.dataset.depth) || 0 }));

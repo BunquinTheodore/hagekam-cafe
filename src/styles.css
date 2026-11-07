@@ -723,3 +723,7 @@ html:not(.js) .film__viewport { overflow-x: auto; }
 @media (prefers-reduced-motion: reduce) {
   .reviews__track.is-looping { animation: none; }
 }
+
+/* Skip layout and paint for far below the fold sections until they approach the viewport.
+   This keeps the first layout small; 'auto' remembers each section's real size once rendered. */
+.signature, .menu, .space, .delivery, .visit, .reviews, .footer { content-visibility: auto; contain-intrinsic-size: auto 1000px; }

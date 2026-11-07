@@ -34,12 +34,28 @@ function startLenis() {
   if (!splashDone) lenis.stop();
 }
 
+/** Smooth scrolls to a section, re-aiming while content-visibility sections above it settle their real size. */
+const ANCHOR_OFFSET = 80;
+const MAX_AIM_PASSES = 3;
+function scrollToSection(target, pass = 0) {
+  lenis.scrollTo(target, {
+    offset: -ANCHOR_OFFSET,
+    onComplete: () => {
+      const miss = Math.abs(target.getBoundingClientRect().top - ANCHOR_OFFSET);
+      const atBottom = window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 2;
+      if (miss > 2 && !atBottom && pass < MAX_AIM_PASSES) scrollToSection(target, pass + 1);
+    },
+  });
+}
+
 document.querySelectorAll('a[href^="#"]').forEach((link) => {
   link.addEventListener('click', (event) => {
     const target = document.querySelector(link.getAttribute('href'));
     if (!target) return;
     event.preventDefault();
-    if (lenis) lenis.scrollTo(target, { offset: -80 });
+    // Sections below the fold use content-visibility, so their height is an estimate until rendered;
+    // aim again once the first scroll lands to correct for it.
+    if (lenis) scrollToSection(target);
     else target.scrollIntoView({ behavior: 'auto' });
     if (target.id === 'top') return;
     if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
