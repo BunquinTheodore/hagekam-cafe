@@ -203,7 +203,8 @@ function requestScene() {
 }
 function armScene() {
   engageEvents.forEach((type) => addEventListener(type, requestScene, { passive: true, once: true }));
-  setTimeout(requestScene, SCENE_FALLBACK_DELAY_MS);
+  // Touch visitors always scroll or tap first, so only desktop needs the timed fallback.
+  if (finePointer) setTimeout(requestScene, SCENE_FALLBACK_DELAY_MS);
 }
 if (document.readyState === 'complete') armScene();
 else addEventListener('load', armScene, { once: true });
