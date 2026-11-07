@@ -1,0 +1,24 @@
+{
+  "name": "hagekam-cafe",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port 4173",
+    "images": "node scripts/images.mjs"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "Hagekam Café website, Balatero Port, Puerto Galera",
+  "dependencies": {
+    "gsap": "^3.12.5",
+    "lenis": "^1.1.18",
+    "three": "^0.170.0"
+  },
+  "devDependencies": {
+    "sharp": "^0.33.5",
+    "vite": "^6.0.7"
+  },
+  "type": "module",
+  "private": true
+}

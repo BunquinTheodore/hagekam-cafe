@@ -1,0 +1,350 @@
+{
+ "logo": {
+  "ratio": 1,
+  "widths": [
+   480,
+   960
+  ]
+ },
+ "cups-display": {
+  "ratio": 1.3333,
+  "widths": [
+   480,
+   960,
+   1440
+  ]
+ },
+ "coconut-cloud": {
+  "ratio": 1.3333,
+  "widths": [
+   480,
+   960
+  ]
+ },
+ "barista": {
+  "ratio": 1.3333,
+  "widths": [
+   480,
+   960
+  ]
+ },
+ "mango-biscoff": {
+  "ratio": 1.25,
+  "widths": [
+   480,
+   960
+  ]
+ },
+ "mama-rosa": {
+  "ratio": 1.2503,
+  "widths": [
+   480,
+   960,
+   1440
+  ]
+ },
+ "shrimp-pasta": {
+  "ratio": 1.2503,
+  "widths": [
+   480,
+   960,
+   1440
+  ]
+ },
+ "matcha-series": {
+  "ratio": 1.4144,
+  "widths": [
+   480,
+   960,
+   1440
+  ]
+ },
+ "grilled-cheese": {
+  "ratio": 1.2503,
+  "widths": [
+   480,
+   960,
+   1440
+  ]
+ },
+ "french-toast": {
+  "ratio": 1.2503,
+  "widths": [
+   480,
+   960,
+   1440
+  ]
+ },
+ "oreo-croffle": {
+  "ratio": 1.2503,
+  "widths": [
+   480,
+   960,
+   1440
+  ]
+ },
+ "greek-salad": {
+  "ratio": 1.2503,
+  "widths": [
+   480,
+   960,
+   1440
+  ]
+ },
+ "caesar-salad": {
+  "ratio": 1.2503,
+  "widths": [
+   480,
+   960,
+   1440
+  ]
+ },
+ "interior-glow": {
+  "ratio": 1.7778,
+  "widths": [
+   480,
+   960
+  ]
+ },
+ "fries": {
+  "ratio": 1.2503,
+  "widths": [
+   480,
+   960,
+   1440
+  ]
+ },
+ "artisan-coffee": {
+  "ratio": 1.2503,
+  "widths": [
+   480,
+   960,
+   1440
+  ]
+ },
+ "clubhouse": {
+  "ratio": 1,
+  "widths": [
+   480,
+   960
+  ]
+ },
+ "interior-night": {
+  "ratio": 0.75,
+  "widths": [
+   480,
+   960,
+   1440
+  ]
+ },
+ "spread": {
+  "ratio": 1.3333,
+  "widths": [
+   480,
+   960
+  ]
+ },
+ "bruschetta": {
+  "ratio": 1.25,
+  "widths": [
+   480,
+   960
+  ]
+ },
+ "tara-kape": {
+  "ratio": 1.25,
+  "widths": [
+   480,
+   960
+  ]
+ },
+ "bolognese": {
+  "ratio": 1.2503,
+  "widths": [
+   480,
+   960,
+   1440
+  ]
+ },
+ "tosilog": {
+  "ratio": 1.2503,
+  "widths": [
+   480,
+   960,
+   1440
+  ]
+ },
+ "nachos": {
+  "ratio": 1.2503,
+  "widths": [
+   480,
+   960,
+   1440
+  ]
+ },
+ "frappe-croffle": {
+  "ratio": 1.2503,
+  "widths": [
+   480,
+   960,
+   1440
+  ]
+ },
+ "hamsilog": {
+  "ratio": 1.2503,
+  "widths": [
+   480,
+   960,
+   1440
+  ]
+ },
+ "sweet-sour-fish": {
+  "ratio": 1.2503,
+  "widths": [
+   480,
+   960,
+   1440
+  ]
+ },
+ "garlic-chicken": {
+  "ratio": 1.2503,
+  "widths": [
+   480,
+   960,
+   1440
+  ]
+ },
+ "delivery": {
+  "ratio": 1.2503,
+  "widths": [
+   480,
+   960,
+   1440
+  ]
+ },
+ "interior-day": {
+  "ratio": 0.75,
+  "widths": [
+   480,
+   960,
+   1440
+  ]
+ },
+ "frappe": {
+  "ratio": 1.4144,
+  "widths": [
+   480,
+   960,
+   1440
+  ]
+ },
+ "storefront": {
+  "ratio": 1,
+  "widths": [
+   480,
+   960,
+   1440
+  ]
+ },
+ "latte-art": {
+  "ratio": 1,
+  "widths": [
+   480,
+   960,
+   1440
+  ]
+ },
+ "wordmark": {
+  "ratio": 1,
+  "widths": [
+   480,
+   960,
+   1440
+  ]
+ },
+ "storefront-open": {
+  "ratio": 1,
+  "widths": [
+   480,
+   960,
+   1440
+  ]
+ },
+ "blackout-burger": {
+  "ratio": 1,
+  "widths": [
+   480,
+   960,
+   1440
+  ]
+ },
+ "coffee-tiramisu": {
+  "ratio": 1,
+  "widths": [
+   480,
+   960,
+   1440
+  ]
+ },
+ "spread-outdoor": {
+  "ratio": 1.2503,
+  "widths": [
+   480,
+   960,
+   1440
+  ]
+ },
+ "iced-latte-drive": {
+  "ratio": 1.7747,
+  "widths": [
+   480,
+   960
+  ]
+ },
+ "matcha-tiramisu": {
+  "ratio": 1.2503,
+  "widths": [
+   480,
+   960,
+   1440
+  ]
+ },
+ "esmeringhoy-latte": {
+  "ratio": 1,
+  "widths": [
+   480,
+   960,
+   1440
+  ]
+ },
+ "longaniza-burger": {
+  "ratio": 1.2503,
+  "widths": [
+   480,
+   960,
+   1440
+  ]
+ },
+ "sandwich-frappe": {
+  "ratio": 1.25,
+  "widths": [
+   480,
+   960
+  ]
+ },
+ "tiramisu-trio": {
+  "ratio": 1,
+  "widths": [
+   480,
+   960,
+   1440
+  ]
+ },
+ "creme-brulee": {
+  "ratio": 1.4144,
+  "widths": [
+   480,
+   960
+  ]
+ }
+}
